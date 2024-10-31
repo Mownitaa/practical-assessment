@@ -10,7 +10,7 @@ const RecipesList = () => {
   const [openDetails, setOpenDetails] = useState(false);
   const [recipeId, setRecipeId] = useState("");
   const [recipes, setRecipes] = useState([]);
-  const [searchInput, setSearchInput] = useState("abc");
+  const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState(null);
 
   const { data, isLoading, error } = useQuery({
@@ -39,7 +39,9 @@ const RecipesList = () => {
   return (
     <div className="bg-gray-50 py-10">
       <div className="container mx-auto">
-        <h1 className="text-2xl font-bold">Top Recipes</h1>
+        <h1 className="text-3xl text-yellow-900 text-center font-bold">
+          Top Recipes
+        </h1>
         {/* Search form */}
         <div>
           <form action="" className="w-full mt-12">

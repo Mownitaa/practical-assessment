@@ -10,7 +10,7 @@ const RecipeCard = ({ recipe, handleDetailsOpen }) => {
       <Image
         className="mx-auto rounded-2xl"
         src={recipe?.strMealThumb}
-        alt="Web Development"
+        alt="Recipe"
         loading="lazy"
         width={500}
         height={500}
@@ -18,11 +18,11 @@ const RecipeCard = ({ recipe, handleDetailsOpen }) => {
       <h3 className="text-2xl font-semibold text-gray-800">
         {recipe?.strMeal}
       </h3>
-      <p>
+      {/* <p>
         Obcaecati, quam? Eligendi, nulla numquam natus laborum porro at cum,
         consectetur ullam tempora ipsa iste officia sed officiis! Incidunt ea
         animi officiis.
-      </p>
+      </p> */}
       <div className="relative mx-auto flex items-center justify-center invisible  group-hover:visible">
         <button className="text-primary">Click to see details</button>
       </div>

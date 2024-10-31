@@ -3,6 +3,15 @@ import axios from "axios";
 const BASE_URL = "https://www.themealdb.com/api/json/v1/1";
 
 const HttpKit = {
+  getAllRecipes: async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/search.php?s=`);
+      return response.data.meals ? response.data.meals : [];
+    } catch (error) {
+      console.error("Error fetching all recipes:", error);
+      throw error;
+    }
+  },
   getTopRecipes: async () => {
     try {
       const response = await axios.get(`${BASE_URL}/filter.php?a=American`);
