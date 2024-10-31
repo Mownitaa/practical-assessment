@@ -1,15 +1,15 @@
 "use client";
 import HttpKit from "@/common/helpers/HttpKit";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
 
 const RecipesList = () => {
-  const [openDetails, setOpenDetails] = useState(false);
-  const [recipeId, setRecipeId] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  const [searchQuery, setSearchQuery] = useState(null);
+  const [searchType, setSearchType] = useState(""); // "name" or "ingredient"
+
+  const queryClient = useQueryClient();
 
   const { data, refetch, isLoading, isError } = useQuery({
     queryKey: ["recipes"],
@@ -23,14 +23,19 @@ const RecipesList = () => {
     }
   }, [data]);
 
-  const handleSearch = () => {
-    setSearchQuery(searchInput);
+  const handleSearch = async () => {
+    try {
+      let searchResults;
+      if (searchType === "name") {
+        searchResults = await HttpKit.searchRecipesByName(searchInput);
+      } else {
+        searchResults = await HttpKit.searchRecipesByIngredient(searchInput);
+      }
+      setRecipes(searchResults);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
   };
-
-  // const handleDetailsOpen = (id) => {
-  //   setOpenDetails(true);
-  //   setRecipeId(id);
-  // };
 
   if (isLoading) return <div>Loading recipes...</div>;
   if (isError) return <div>Error loading recipes: {isError.message}</div>;
@@ -43,23 +48,31 @@ const RecipesList = () => {
         </h1>
         {/* Search form */}
         <div>
-          <form action="" className="w-full mt-12">
-            <div className="relative flex p-1 rounded-full bg-white   border border-yellow-200 shadow-md md:p-2">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSearch();
+            }}
+            className="w-full mt-12"
+          >
+            <div className="relative flex p-1 rounded-full bg-white border border-yellow-200 shadow-md md:p-2">
               <input
-                placeholder="Your favorite food"
+                placeholder="Your favorite food of ingredient"
                 className="w-full p-4 rounded-full outline-none bg-transparent "
                 type="text"
-                onChange={(e) =>
-                  setSearchInput((prev) => ({
-                    ...prev,
-                    value: e.target.value,
-                  }))
-                }
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                // onChange={(e) =>
+                //   setSearchInput((prev) => ({
+                //     ...prev,
+                //     value: e.target.value,
+                //   }))
+                // }
               />
               <button
-                onClick={() => handleSearch()}
-                type="button"
-                title="Start buying"
+                // onClick={() => handleSearch()}
+                type="submit"
+                title="search"
                 className="ml-auto py-3 px-6 rounded-full text-center transition bg-gradient-to-b from-yellow-200 to-yellow-300 hover:to-red-300 active:from-yellow-400 focus:from-red-400 md:px-12"
               >
                 <span className="hidden text-yellow-900 font-semibold md:block">
@@ -80,14 +93,19 @@ const RecipesList = () => {
         <div className="relative py-16">
           <div className="container relative m-auto px-6 text-gray-500 md:px-12">
             <div className="grid gap-6 md:mx-auto md:w-8/12 lg:w-full lg:grid-cols-3">
-              {recipes?.map((recipe) => (
-                <RecipeCard
-                  key={recipe?.id}
-                  recipe={recipe}
-                  refetch={refetch}
-                  // handleDetailsOpen={handleDetailsOpen}
-                />
-              ))}
+              {recipes.length > 0 ? (
+                <>
+                  {recipes?.map((recipe) => (
+                    <RecipeCard
+                      key={recipe?.idMeal}
+                      recipe={recipe}
+                      refetch={refetch}
+                    />
+                  ))}
+                </>
+              ) : (
+                <p>No recipes found</p>
+              )}
             </div>
           </div>
         </div>

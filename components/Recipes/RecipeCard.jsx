@@ -1,8 +1,9 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import SingleRecipeModal from "./SingleRecipeModal";
 import { useQuery } from "@tanstack/react-query";
 import HttpKit from "@/common/helpers/HttpKit";
+import SingleRecipeModal from "./SingleRecipeModal";
+
 const RecipeCard = ({ recipe, refetch }) => {
   const [openSingleRecipeModal, setOpenSingleRecipeModal] = useState(false);
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
@@ -10,7 +11,6 @@ const RecipeCard = ({ recipe, refetch }) => {
   const { data: recipeData } = useQuery({
     queryKey: ["recipe-details", selectedRecipeId],
     queryFn: () => HttpKit.getRecipeDetails(selectedRecipeId),
-    // HttpKit.getRecipeDetails(selectedRecipeId)
   });
   console.log(recipeData);
   const handleCardClick = (id) => {
@@ -18,22 +18,17 @@ const RecipeCard = ({ recipe, refetch }) => {
     setOpenSingleRecipeModal(true);
   };
 
-  // if (isLoading) return <div>Loading recipes...</div>;
-  // if (isError) return <div>Error loading recipes: {isError.message}</div>;
   return (
     <>
       <SingleRecipeModal
         recipe={recipeData}
         open={openSingleRecipeModal}
         setOpen={setOpenSingleRecipeModal}
-        // recipe={selectedRecipe}
-        // setSelectedRecipe={setSelectedRecipe}
         refetch={refetch}
       />
       <div
         onClick={() => {
           handleCardClick(recipe.idMeal);
-          // setOpenSingleRecipeModal(true);
         }}
         className="group space-y-6 border border-gray-100  rounded-3xl bg-white  px-4 py-4 text-center shadow hover:cursor-pointer hover:shadow-xl transition duration-200 shadow-gray-600/10"
       >
@@ -45,17 +40,38 @@ const RecipeCard = ({ recipe, refetch }) => {
           width={500}
           height={500}
         />
-        <h3 className="text-2xl font-semibold text-gray-800">
+        <h3 className="text-2xl font-semibold text-yellow-900">
           {recipe?.strMeal}
         </h3>
-        <p>
+        <p className="text-gray-700">
           Obcaecati, quam? Eligendi, nulla numquam natus laborum porro at cum,
           consectetur ullam tempora ipsa iste officia sed officiis! Incidunt ea
           animi officiis.
         </p>
-        <div className="relative mx-auto flex items-center justify-center invisible  group-hover:visible">
-          <button className="text-primary">Click to see details</button>
-        </div>
+        <button
+          // onClick={}
+          type="button"
+          title="Start buying"
+          className="w-full py-3 px-6 text-center rounded-xl transition bg-yellow-300 hover:bg-yellow-100 active:bg-yellow-400 focus:bg-yellow-300 sm:w-max invisible  group-hover:visible"
+        >
+          <p className="flex items-center gap-2 block text-yellow-900 font-semibold text-sm">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+              />
+            </svg>
+            Add To Cart
+          </p>
+        </button>
       </div>
     </>
   );
