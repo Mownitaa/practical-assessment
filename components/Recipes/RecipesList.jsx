@@ -3,8 +3,6 @@ import HttpKit from "@/common/helpers/HttpKit";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
-import Modal from "../Modal";
-import SingleRecipe from "./SingleRecipe";
 
 const RecipesList = () => {
   const [openDetails, setOpenDetails] = useState(false);
@@ -13,12 +11,13 @@ const RecipesList = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState(null);
 
-  const { data, isLoading, error } = useQuery({
+  const { data, refetch, isLoading, isError } = useQuery({
     queryKey: ["recipes"],
     queryFn: HttpKit.getTopRecipes,
   });
 
   useEffect(() => {
+    refetch();
     if (data) {
       setRecipes(data);
     }
@@ -28,13 +27,13 @@ const RecipesList = () => {
     setSearchQuery(searchInput);
   };
 
-  const handleDetailsOpen = (id) => {
-    setOpenDetails(true);
-    setRecipeId(id);
-  };
+  // const handleDetailsOpen = (id) => {
+  //   setOpenDetails(true);
+  //   setRecipeId(id);
+  // };
 
   if (isLoading) return <div>Loading recipes...</div>;
-  if (error) return <div>Error loading recipes: {error.message}</div>;
+  if (isError) return <div>Error loading recipes: {isError.message}</div>;
 
   return (
     <div className="bg-gray-50 py-10">
@@ -85,18 +84,14 @@ const RecipesList = () => {
                 <RecipeCard
                   key={recipe?.id}
                   recipe={recipe}
-                  handleDetailsOpen={handleDetailsOpen}
+                  refetch={refetch}
+                  // handleDetailsOpen={handleDetailsOpen}
                 />
               ))}
             </div>
           </div>
         </div>
       </div>
-
-      {/* Modal*/}
-      <Modal isOpen={openDetails} setIsOpen={setOpenDetails}>
-        <SingleRecipe id={recipeId} setIsOpen={setOpenDetails} />
-      </Modal>
     </div>
   );
 };

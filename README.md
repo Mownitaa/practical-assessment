@@ -5,6 +5,8 @@
 <!--
 #Implemented signup, signin and logout using local storage(handled existing username validation and username & password validation)
 
+#Fixed modal issue and show recipe details in Modal
+
 #created InputField component
 -->
 
