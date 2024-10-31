@@ -33,28 +33,30 @@ const RecipeCard = ({ recipe, refetch }) => {
         setOpen={setOpenSingleRecipeModal}
         refetch={refetch}
       />
-      <div
-        onClick={() => {
-          handleCardClick(recipe.idMeal);
-        }}
-        className="group space-y-6 border border-gray-100  rounded-3xl bg-white  px-4 py-4 text-center shadow hover:cursor-pointer hover:shadow-xl transition duration-200 shadow-gray-600/10"
-      >
-        <Image
-          className="mx-auto rounded-2xl"
-          src={recipe?.strMealThumb}
-          alt="Recipe"
-          loading="lazy"
-          width={500}
-          height={500}
-        />
-        <h3 className="text-2xl font-semibold text-yellow-900">
-          {recipe?.strMeal}
-        </h3>
-        <p className="text-gray-700">
-          Obcaecati, quam? Eligendi, nulla numquam natus laborum porro at cum,
-          consectetur ullam tempora ipsa iste officia sed officiis! Incidunt ea
-          animi officiis.
-        </p>
+      <div className="group space-y-6 border border-gray-100  rounded-3xl bg-white  px-4 py-4 text-center shadow hover:cursor-pointer hover:shadow-xl transition duration-200 shadow-gray-600/10">
+        <div
+          onClick={() => {
+            handleCardClick(recipe.idMeal);
+          }}
+          className="space-y-6 bg-white px-4 py-4 text-center hover:cursor-pointer"
+        >
+          <Image
+            className="mx-auto rounded-2xl"
+            src={recipe?.strMealThumb}
+            alt="Recipe"
+            loading="lazy"
+            width={500}
+            height={500}
+          />
+          <h3 className="text-2xl font-semibold text-yellow-900">
+            {recipe?.strMeal}
+          </h3>
+          <p className="text-gray-700">
+            Obcaecati, quam? Eligendi, nulla numquam natus laborum porro at cum,
+            consectetur ullam tempora ipsa iste officia sed officiis! Incidunt
+            ea animi officiis.
+          </p>
+        </div>
         <button
           onClick={addToCart}
           type="button"

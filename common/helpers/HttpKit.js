@@ -76,11 +76,26 @@ const HttpKit = {
     }
   },
 
+  filterByMainIngredient: async (mainIngredient) => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/filter.php?i=${mainIngredient}`
+      );
+      // , {
+      //   params: { i: mainIngredient },
+      // });
+      return response.data.meals || [];
+    } catch (error) {
+      console.error("Error filtering recipes by category:", error);
+      throw error;
+    }
+  },
   filterByCategory: async (category) => {
     try {
-      const response = await axios.get(`${BASE_URL}/filter.php`, {
-        params: { c: category },
-      });
+      const response = await axios.get(`${BASE_URL}/filter.php?c=${category}`);
+      // , {
+      //   params: { c: category },
+      // });
       return response.data.meals || [];
     } catch (error) {
       console.error("Error filtering recipes by category:", error);
@@ -90,9 +105,10 @@ const HttpKit = {
 
   filterByArea: async (area) => {
     try {
-      const response = await axios.get(`${BASE_URL}/filter.php`, {
-        params: { a: area },
-      });
+      const response = await axios.get(`${BASE_URL}/filter.php?a=${area}`);
+      //   , {
+      //   params: { a: area },
+      // });
       return response.data.meals || [];
     } catch (error) {
       console.error("Error filtering recipes by area:", error);

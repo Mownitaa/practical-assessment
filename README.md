@@ -2,12 +2,16 @@
 
 # Description:
 
-<!--
-#Implemented signup, signin and logout using local storage(handled existing username validation and username & password validation)
-#created common components (ex: InputField, Modal)
-#Fixed modal issue and show recipe details in Modal
-#Implemented search by ingredient from top rcipes
--->
+- Features Implemented:
+  *Implemented authentication flow including signup, signin, logout using local storage
+  *created common components (ex: InputField, Modal)
+  \*Implemented add to cart
+- Bug Fixes:
+  \*Fixed modal issue and show recipe details in Modal
+  Implemented search by ingredient in top rcipes section
+- Time Estimate: Indicate the total time spent on the assessment.
+
+<!-- practical test instructions & requirements -->
 
 - You are provided with an incomplete Recipe App project that uses the free MealDB API to retrieve recipe data. The app needs to showcase some recipes and allows users to add them to a cart. Functionalities after carting is not required for the current MVP. The home page includes a banner section, a top recipes section, and a search option to find recipes by name or ingredients.
 
