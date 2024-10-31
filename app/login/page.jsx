@@ -70,7 +70,6 @@ export default function SignIn() {
           >
             Sign in
           </button>
-          {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
         <div className="mt-6 text-center">
           <p className="text-base text-yellow-700">

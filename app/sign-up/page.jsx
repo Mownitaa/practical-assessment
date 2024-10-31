@@ -81,7 +81,6 @@ export default function SignUp() {
           >
             Sign Up
           </button>
-          {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
         <div className="mt-6 text-center">
           <p className="text-base text-yellow-700">Already have an account?</p>

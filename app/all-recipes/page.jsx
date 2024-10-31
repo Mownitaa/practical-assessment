@@ -30,8 +30,18 @@ const RecipesList = () => {
     setRecipeId(id);
   };
 
-  if (isLoading) return <div>Loading recipes...</div>;
-  if (error) return <div>Error loading recipes: {error.message}</div>;
+  if (isLoading)
+    return (
+      <div className="container m-auto px-6 pt-40 md:px-12 lg:pt-[4.8rem] lg:px-7">
+        Loading recipes...
+      </div>
+    );
+  if (error)
+    return (
+      <div className="container m-auto px-6 pt-40 md:px-12 lg:pt-[4.8rem] lg:px-7">
+        Error loading recipes: {error.message}
+      </div>
+    );
 
   return (
     <div className="relative bg-yellow-50 z-10">

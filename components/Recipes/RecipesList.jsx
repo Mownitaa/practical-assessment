@@ -7,7 +7,8 @@ import RecipeCard from "./RecipeCard";
 const RecipesList = () => {
   const [recipes, setRecipes] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  const [searchType, setSearchType] = useState(""); // "name" or "ingredient"
+  const [searchType, setSearchType] = useState(""); //search recipe by ingredient
+  // const [searchType, setSearchType] = useState("query"); //search recipe by name
 
   const queryClient = useQueryClient();
 
@@ -26,19 +27,32 @@ const RecipesList = () => {
   const handleSearch = async () => {
     try {
       let searchResults;
-      if (searchType === "name") {
+      if (searchType === "query") {
         searchResults = await HttpKit.searchRecipesByName(searchInput);
       } else {
         searchResults = await HttpKit.searchRecipesByIngredient(searchInput);
       }
       setRecipes(searchResults);
+      setSearchInput("");
     } catch (error) {
       console.error("Error fetching search results:", error);
+      setRecipes([]);
+      setSearchInput("");
     }
   };
 
-  if (isLoading) return <div>Loading recipes...</div>;
-  if (isError) return <div>Error loading recipes: {isError.message}</div>;
+  if (isLoading)
+    return (
+      <div className="container m-auto px-6 py-6 md:px-12 lg:pt-[4.8rem] lg:px-7">
+        Loading recipes...
+      </div>
+    );
+  if (isError)
+    return (
+      <div className="container m-auto px-6 py-6 md:px-12 lg:pt-[4.8rem] lg:px-7">
+        Error loading recipes: {isError.message}
+      </div>
+    );
 
   return (
     <div className="bg-gray-50 py-10">
@@ -57,17 +71,11 @@ const RecipesList = () => {
           >
             <div className="relative flex p-1 rounded-full bg-white border border-yellow-200 shadow-md md:p-2">
               <input
-                placeholder="Your favorite food of ingredient"
+                placeholder="Search your favorite ingredient"
                 className="w-full p-4 rounded-full outline-none bg-transparent "
                 type="text"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                // onChange={(e) =>
-                //   setSearchInput((prev) => ({
-                //     ...prev,
-                //     value: e.target.value,
-                //   }))
-                // }
               />
               <button
                 // onClick={() => handleSearch()}

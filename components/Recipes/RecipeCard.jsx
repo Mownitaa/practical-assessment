@@ -18,6 +18,13 @@ const RecipeCard = ({ recipe, refetch }) => {
     setOpenSingleRecipeModal(true);
   };
 
+  const addToCart = () => {
+    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const updatedCart = [...existingCart, recipe];
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    alert("Recipe added to cart!");
+  };
+
   return (
     <>
       <SingleRecipeModal
@@ -49,7 +56,7 @@ const RecipeCard = ({ recipe, refetch }) => {
           animi officiis.
         </p>
         <button
-          // onClick={}
+          onClick={addToCart}
           type="button"
           title="Start buying"
           className="w-full py-3 px-6 text-center rounded-xl transition bg-yellow-300 hover:bg-yellow-100 active:bg-yellow-400 focus:bg-yellow-300 sm:w-max invisible  group-hover:visible"

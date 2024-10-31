@@ -29,8 +29,8 @@ export const AuthProvider = ({ children }) => {
         );
 
         if (existingUser) {
-          reject(new Error("Username already exists"));
           alert("User slready exists");
+          reject(new Error("Username already exists"));
         } else if (newUser.username && newUser.password) {
           const updatedUserDatabase = [...userDatabase, newUser];
           setUserDatabase(updatedUserDatabase);
@@ -62,6 +62,7 @@ export const AuthProvider = ({ children }) => {
           resolve(true);
         } else {
           reject(new Error("Invalid username or password"));
+          alert("Invalid username or password");
         }
         setError("");
       });
