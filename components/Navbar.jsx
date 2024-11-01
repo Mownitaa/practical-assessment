@@ -1,13 +1,18 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
 
   return (
-    <nav className="fixed z-50 w-full bg-white  md:absolute md:bg-transparent">
+    <nav className="fixed z-50 w-full bg-white md:absolute md:bg-transparent">
       <div className="container m-auto px-2 md:px-12 lg:px-7">
         <div className="flex flex-wrap items-center justify-between py-3 gap-6 md:py-4 md:gap-0">
           <input
@@ -16,7 +21,7 @@ const Navbar = () => {
             id="toggle_nav"
             className="peer hidden"
           />
-          <div className="w-full px-6 flex justify-between lg:w-max md:px-0 z-30">
+          <div className="w-full px-6 flex justify-between lg:w-max md:px-0">
             <Link
               href="/"
               aria-label="logo"
@@ -50,9 +55,9 @@ const Navbar = () => {
           <label
             role="button"
             htmlFor="toggle_nav"
-            className="hidden peer-checked:block fixed w-full h-full left-0 top-0 z-10 bg-yellow-200  bg-opacity-30 backdrop-blur backdrop-filter"
+            className="hidden peer-checked:block fixed w-full h-full left-0 top-0 z-10 bg-yellow-200  bg-opacity-30 backdrop-filter"
           ></label>
-          <div className="hidden peer-checked:flex w-full flex-col lg:flex lg:flex-row justify-end z-30 items-center gap-y-6 p-6 rounded-xl bg-white  lg:gap-y-0 lg:p-0 md:flex-nowrap lg:bg-transparent lg:w-7/12">
+          <div className="hidden peer-checked:flex w-full flex-col lg:flex lg:flex-row justify-end z-10 items-center gap-y-6 p-6 rounded-xl bg-white lg:gap-y-0 lg:p-0 md:flex-nowrap lg:bg-transparent lg:w-7/12">
             <div className="text-gray-600 lg:pr-4 w-full">
               <ul className="tracking-wide font-medium text-sm flex flex-col gap-y-6 lg:gap-y-0 lg:flex-row w-full">
                 <li>
@@ -87,39 +92,32 @@ const Navbar = () => {
                 </button>
               </Link>
               {user ? (
-                <>
-                  <button
-                    onClick={logout}
-                    type="button"
-                    title="Start buying"
-                    className="w-full py-3 px-6 text-center rounded-full transition bg-yellow-300 hover:bg-yellow-100 active:bg-yellow-400 focus:bg-yellow-300 sm:w-max"
+                <button
+                  onClick={toggleDrawer}
+                  type="button"
+                  title="user icon"
+                  className="w-full p-3 text-center rounded-full transition bg-yellow-300 hover:bg-yellow-100 active:bg-yellow-400 focus:bg-yellow-300 sm:w-max"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-5 block text-yellow-900 font-semibold text-sm"
                   >
-                    <span className="block text-yellow-900 font-semibold text-sm">
-                      Logout
-                    </span>
-                  </button>
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                      />
-                    </svg>
-                  </div>
-                </>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                    />
+                  </svg>
+                </button>
               ) : (
                 <Link href="/login">
                   <button
                     type="button"
-                    title="Start buying"
+                    title="login"
                     className="w-full py-3 px-6 text-center rounded-full transition bg-yellow-300 hover:bg-yellow-100 active:bg-yellow-400 focus:bg-yellow-300 sm:w-max"
                   >
                     <span className="block text-yellow-900 font-semibold text-sm">
@@ -130,6 +128,44 @@ const Navbar = () => {
               )}
             </div>
           </div>
+        </div>
+      </div>
+      {/* Drawer Overlay */}
+      {isDrawerOpen && (
+        <div
+          className="fixed inset-0 z-54 bg-black bg-opacity-50"
+          onClick={toggleDrawer}
+        ></div>
+      )}
+
+      {/* Drawer */}
+      <div
+        className={`fixed right-0 top-0 w-1/2 md:w-1/4 h-full bg-white  transform ${
+          isDrawerOpen ? "translate-x-0" : "translate-x-full"
+        } transition-transform duration-300`}
+      >
+        <div className="p-4">
+          {user && (
+            <>
+              <h2 className="text-lg text-yellow-900 font-bold">
+                {user.username}
+              </h2>
+              <p className="text-gray-700">{user.email}</p>
+              <Link href="/cart">
+                <button className="block text-yellow-900 font-semibold w-full mt-8 py-2 px-4 rounded bg-yellow-50 hover:bg-yellow-200">
+                  My Cart
+                </button>
+              </Link>
+              <button
+                onClick={logout}
+                type="button"
+                title="Start buying"
+                className="block text-yellow-900 font-semibold w-full mt-4 py-2 px-4 rounded bg-yellow-300 hover:bg-yellow-200"
+              >
+                Logout
+              </button>
+            </>
+          )}
         </div>
       </div>
     </nav>

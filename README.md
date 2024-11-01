@@ -5,7 +5,8 @@
 - Features Implemented:
   *Implemented authentication flow including signup, signin, logout using local storage
   *created common components (ex: InputField, Modal)
-  \*Implemented add to cart
+  *Implemented add to cart
+  *implemented filter by category,main ingredient and area in all recipes page
 - Bug Fixes:
   \*Fixed modal issue and show recipe details in Modal
   Implemented search by ingredient in top rcipes section

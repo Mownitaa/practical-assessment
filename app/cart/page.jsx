@@ -18,14 +18,12 @@ const Cart = () => {
 
   return (
     <div className="relative bg-yellow-50 z-10">
-      <div className="container m-auto px-6 py-6 pt-40 md:px-12 lg:pt-[4.8rem] lg:px-7">
-        {/* <h1 className="pt-20 text-3xl text-yellow-900 font-bold">
-          This is the cart page
-        </h1> */}
+      <div className="container m-auto px-6 py-6 pt-12 lg:pt-20 md:px-12 lg:px-7">
+        <h1 className="pt-12 text-3xl text-yellow-900 font-bold">View cart</h1>
         {cartItems.length === 0 ? (
           <p>Your cart is empty.</p>
         ) : (
-          <div className="pt-20 grid gap-6 md:mx-auto md:w-8/12 lg:w-full lg:grid-cols-2">
+          <div className="py-6 grid gap-6 md:mx-auto md:w-8/12 lg:w-full lg:grid-cols-2">
             {cartItems.map((item, index) => (
               <>
                 <div className="flex items-center p-4 border border-gray-300 rounded-lg bg-white shadow-md mb-4">
