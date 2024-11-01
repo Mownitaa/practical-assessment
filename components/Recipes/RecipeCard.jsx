@@ -21,10 +21,6 @@ const RecipeCard = ({ recipe, refetch }) => {
     setOpenSingleRecipeModal(true);
   };
   const addToCart = () => {
-    if (!user) {
-      alert("You need to be logged in to add items to the cart.");
-      return;
-    }
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
     const updatedCart = [...existingCart, recipe];
     localStorage.setItem("cart", JSON.stringify(updatedCart));
