@@ -7,7 +7,9 @@
   *If any user is looged in then user details is shown inside a toggle drawer
   *created common components (ex: InputField, Modal)
   *Implemented add to cart
-  \*implemented filter by category,main ingredient and area in all recipes page
+  *implemented filter by category,main ingredient and area in all recipes page
+  *handled my-cart for logged in users
+
 - Bug Fixes:
   \*Fixed modal issue and show recipe details in Modal
   Implemented search by ingredient in top rcipes section
