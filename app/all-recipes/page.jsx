@@ -104,7 +104,7 @@ const AllRecipes = () => {
     <div className="relative bg-yellow-50 z-10">
       <div className="container m-auto px-6 pt-12 lg:pt-20 md:px-12 lg:px-7">
         <div className="container mx-12 pt-8 pb-6 space-x-1">
-          <div>
+          <div className="space-x-2">
             {/* <select onChange={handleChangeMainIngredient} value={mainIngredient}> */}
             <select
               className="p-2 font-bold text-yellow-900 rounded-xl bottom-2"

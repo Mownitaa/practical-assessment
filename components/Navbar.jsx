@@ -80,7 +80,7 @@ const Navbar = () => {
                 </ul>
               </div>
 
-              <div className="w-full flex justify-center min-w-max border-yellow-200 lg:space-y-0 sm:w-max lg:border-l">
+              <div className="w-full flex justify-center min-w-max border-yellow-200 space-x-1 lg:space-y-0 sm:w-max lg:border-l">
                 <Link href="/sign-up">
                   <button
                     type="button"
