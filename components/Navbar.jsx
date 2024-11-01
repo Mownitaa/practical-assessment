@@ -154,7 +154,7 @@ const Navbar = () => {
                   {user.username}
                 </h2>
                 <p className="text-gray-700">{user.email}</p>
-                <Link href="/cart">
+                <Link href="/my-cart">
                   <button className="block text-yellow-900 font-semibold w-full mt-8 py-2 px-4 rounded bg-yellow-50 hover:bg-yellow-200">
                     My Cart
                   </button>

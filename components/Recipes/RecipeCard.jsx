@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import HttpKit from "@/common/helpers/HttpKit";
 import SingleRecipeModal from "./SingleRecipeModal";
+import { useAuth } from "@/context/AuthContext";
 
 const RecipeCard = ({ recipe, refetch }) => {
+  const { user } = useAuth(); // Get the logged-in user from context
+
   const [openSingleRecipeModal, setOpenSingleRecipeModal] = useState(false);
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
 
@@ -17,14 +20,23 @@ const RecipeCard = ({ recipe, refetch }) => {
     setSelectedRecipeId(id);
     setOpenSingleRecipeModal(true);
   };
-
   const addToCart = () => {
+    if (!user) {
+      alert("You need to be logged in to add items to the cart.");
+      return;
+    }
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
     const updatedCart = [...existingCart, recipe];
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     alert("Recipe added to cart!");
+    const existingUserCart =
+      JSON.parse(localStorage.getItem(`cart_${user.username}`)) || [];
+    const updatedUserCart = [...existingUserCart, recipe];
+    localStorage.setItem(
+      `cart_${user.username}`,
+      JSON.stringify(updatedUserCart)
+    );
   };
-
   return (
     <>
       <SingleRecipeModal
